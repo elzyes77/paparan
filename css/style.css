@@ -1,613 +1,439 @@
-/* =========================================================
-   MISSION 60 — Design tokens
-   Palette: deep space navy + electric blue + violet + amber highlight
-   Type: Space Grotesk (display) / Inter (body) / JetBrains Mono (HUD/data)
-========================================================= */
-:root{
-  --bg:            #07111F;
-  --bg-alt:        #0B1626;
-  --surface:       #101C30;
-  --surface-2:     #16233A;
-  --border:        rgba(255,255,255,0.08);
-  --text:          #F3F5FA;
-  --text-dim:      #94A0B8;
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MISSION 60 — Presentasi Profesional dengan AI dalam 60 Menit</title>
+<meta name="description" content="Interactive keynote experience: 10 langkah mengubah ide menjadi presentasi profesional bersama AI, hanya dalam 60 menit. Lengkap dengan mode presentasi layar penuh.">
 
-  --primary:       #4F8CFF;   /* electric blue */
-  --primary-dim:   #3866C4;
-  --accent:        #8B5CF6;   /* violet */
-  --accent-dim:    #6B41C9;
-  --highlight:     #FFC857;   /* amber */
-  --highlight-dim: #D19E33;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  --font-display:  'Space Grotesk', system-ui, sans-serif;
-  --font-body:     'Inter', system-ui, sans-serif;
-  --font-mono:     'JetBrains Mono', monospace;
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-  --container:     880px;
-  --radius:        18px;
-}
+<!-- ============ BOOT SEQUENCE ============ -->
+<div id="boot" class="boot">
+  <div class="boot__inner">
+    <div class="boot__logo">AI PRESENTATION OS <span>v1.0</span></div>
+    <div class="boot__log" id="bootLog"></div>
+    <div class="boot__bar"><div class="boot__bar-fill" id="bootFill"></div></div>
+    <div class="boot__pct" id="bootPct">0%</div>
+  </div>
+  <button class="boot__skip" id="bootSkip">Lewati &rsaquo;</button>
+</div>
 
-*{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:auto; background:var(--bg); }
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-body);
-  line-height:1.6;
-  overflow-x:hidden;
-}
-a{ color:inherit; text-decoration:none; }
-ul,ol{ list-style:none; }
-img{ max-width:100%; display:block; }
-button{ font-family:inherit; }
+<!-- ============ HUD / MISSION BAR ============ -->
+<header class="hud" id="hud">
+  <div class="hud__left">
+    <span class="hud__dot"></span>
+    <span class="hud__label">MISSION 60</span>
+  </div>
+  <nav class="hud__nav">
+    <a href="#misi-hari-ini">10 Langkah</a>
+    <a href="#toolkit">Toolkit</a>
+    <a href="#checklist">Checklist</a>
+  </nav>
+  <div class="hud__right">
+    <span class="hud__timer-label">Sisa Waktu</span>
+    <span class="hud__timer" id="missionTimer">60:00</span>
+    <button class="hud__present-btn" id="presentBtn" title="Mode Presentasi (fullscreen)">
+      <span>▣</span> Mode Presentasi
+    </button>
+  </div>
+</header>
+<div class="hud__progress"><div class="hud__progress-fill" id="hudProgress"></div></div>
 
-::selection{ background:var(--highlight); color:#191204; }
+<!-- ============ PRESENTATION MODE CONTROLS (hidden unless active) ============ -->
+<button class="pmode-exit" id="pmodeExit" title="Keluar (Esc)">✕ Keluar Presentasi</button>
+<div class="pmode-dots" id="pmodeDots"></div>
+<div class="pmode-counter" id="pmodeCounter"></div>
+<div class="pmode-hint" id="pmodeHint">Space / → untuk lanjut &nbsp;·&nbsp; ← untuk kembali &nbsp;·&nbsp; Esc untuk keluar</div>
 
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
-}
+<main>
 
-/* ---------- Layout helpers ---------- */
-section{
-  max-width:var(--container);
-  margin:0 auto;
-  padding:120px 24px;
-}
-.eyebrow{
-  font-family:var(--font-mono);
-  font-size:12px;
-  letter-spacing:0.18em;
-  color:var(--highlight);
-  display:block;
-  margin-bottom:18px;
-  text-align:center;
-}
-.eyebrow--light{ color:var(--primary); }
-.section-title{
-  font-family:var(--font-display);
-  font-weight:700;
-  font-size:clamp(28px,4vw,44px);
-  text-align:center;
-  line-height:1.15;
-  margin-bottom:16px;
-}
-.text-highlight{ color:var(--highlight); }
-.text-primary{ color:var(--primary); }
-.pull-quote{
-  max-width:640px;
-  margin:56px auto 0;
-  text-align:center;
-  padding:32px 28px;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  display:flex; flex-direction:column; gap:10px;
-}
-.pull-quote strong{ font-family:var(--font-display); font-size:22px; color:var(--highlight); }
-.pull-quote span{ color:var(--text-dim); font-size:15px; }
-.pull-quote--light strong{ color:var(--primary); }
+<!-- ============ 01 · HERO — MISSION START ============ -->
+<section class="hero" id="hero" data-slide data-slide-name="Mission Start">
+  <div class="hero__grid"></div>
+  <div class="hero__content">
+    <p class="eyebrow">01 · SEBUAH MISI INTERAKTIF</p>
+    <h1 class="hero__title">
+      Selamat Datang di<br><span class="glow">MISSION 60</span>
+    </h1>
+    <p class="hero__tagline">Presentasi Profesional dengan AI — dalam 60 Menit.</p>
 
-/* ---------- Reveal-on-scroll base state ---------- */
-.reveal{ opacity:0; transform:translateY(28px); }
+    <p class="hero__prompt">Hari ini Anda memiliki satu tantangan:</p>
+    <p class="hero__challenge">"Mampukah Anda membuat presentasi profesional hanya dalam waktu <strong>60 menit</strong> dengan bantuan AI, sebelum timer menyentuh nol?"</p>
 
-/* ---------- Buttons ---------- */
-.btn{
-  display:inline-flex; align-items:center; gap:10px;
-  font-family:var(--font-display); font-weight:600; font-size:15px;
-  padding:15px 30px; border-radius:100px; cursor:pointer; border:none;
-}
-.btn--primary{
-  background:linear-gradient(90deg, var(--primary), var(--accent));
-  color:#fff;
-  transition:transform .25s ease, box-shadow .25s ease;
-}
-.btn--primary:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(79,140,255,.35); }
-.btn__arrow{ transition:transform .2s ease; }
-.btn--primary:hover .btn__arrow{ transform:translateX(4px); }
-.btn--ghost{
-  background:transparent; border:1px solid var(--border); color:var(--text-dim);
-  padding:10px 20px; font-size:13.5px; transition:border-color .2s ease, color .2s ease;
-}
-.btn--ghost:hover{ border-color:var(--primary); color:var(--text); }
+    <div class="hero__targets">
+      <span class="hero__targets-label">TARGET AKHIR</span>
+      <ul>
+        <li><span class="check">✔</span> Presentasi siap tampil</li>
+        <li><span class="check">✔</span> Desain profesional</li>
+        <li><span class="check">✔</span> Materi terstruktur</li>
+        <li><span class="check">✔</span> Percaya diri saat presentasi</li>
+      </ul>
+    </div>
 
-/* =========================================================
-   BOOT SEQUENCE
-========================================================= */
-.boot{
-  position:fixed; inset:0; z-index:999;
-  background:var(--bg);
-  display:flex; align-items:center; justify-content:center;
-  flex-direction:column;
-}
-.boot__inner{ width:min(420px, 84vw); font-family:var(--font-mono); }
-.boot__logo{
-  font-size:14px; letter-spacing:0.1em; color:var(--primary); margin-bottom:22px; text-align:center;
-}
-.boot__logo span{ color:var(--text-dim); }
-.boot__log{
-  height:120px; font-size:12px; color:var(--text-dim); overflow:hidden;
-  display:flex; flex-direction:column; gap:6px; margin-bottom:18px;
-}
-.boot__log div{ opacity:0; animation:bootLine .4s forwards; }
-.boot__log div::before{ content:"> "; color:var(--highlight); }
-@keyframes bootLine{ to{ opacity:1; } }
-.boot__bar{
-  width:100%; height:4px; background:var(--surface-2); border-radius:4px; overflow:hidden;
-}
-.boot__bar-fill{
-  height:100%; width:0%; background:linear-gradient(90deg,var(--primary),var(--accent),var(--highlight));
-  transition:width .25s ease-out;
-}
-.boot__pct{ text-align:right; font-size:12px; color:var(--text-dim); margin-top:8px; }
-.boot__skip{
-  position:absolute; bottom:28px; right:28px;
-  background:none; border:1px solid var(--border); color:var(--text-dim);
-  font-family:var(--font-mono); font-size:12px; padding:8px 14px; border-radius:100px; cursor:pointer;
-}
-.boot__skip:hover{ color:var(--text); border-color:var(--text-dim); }
-.boot.is-hidden{ opacity:0; pointer-events:none; transition:opacity .5s ease; }
+    <a href="#story" class="btn btn--primary" id="startMission">Start the Mission<span class="btn__arrow">→</span></a>
+  </div>
+  <div class="scroll-cue"><span></span> Scroll untuk lanjut</div>
+</section>
 
-/* =========================================================
-   HUD
-========================================================= */
-.hud{
-  position:fixed; top:0; left:0; right:0; z-index:60;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 28px;
-  backdrop-filter:blur(10px);
-  background:rgba(7,17,31,0.7);
-  border-bottom:1px solid var(--border);
-  transform:translateY(-100%);
-  transition:transform .5s ease;
-}
-.hud.is-visible{ transform:translateY(0); }
-.hud__left{ display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:13px; letter-spacing:.08em; }
-.hud__dot{ width:8px; height:8px; border-radius:50%; background:var(--highlight); box-shadow:0 0 8px var(--highlight); }
-.hud__nav{ display:flex; gap:24px; font-size:13px; color:var(--text-dim); }
-.hud__nav a:hover{ color:var(--text); }
-.hud__right{ display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:13px; color:var(--text-dim); }
-.hud__timer{ color:var(--primary); font-weight:600; }
-.hud__present-btn{
-  display:flex; align-items:center; gap:6px;
-  background:var(--surface); border:1px solid var(--border); color:var(--text);
-  font-family:var(--font-mono); font-size:11.5px; padding:8px 14px; border-radius:100px; cursor:pointer;
-  transition:border-color .2s ease;
-}
-.hud__present-btn:hover{ border-color:var(--primary); }
-.hud__progress{ position:fixed; top:0; left:0; right:0; height:2px; z-index:61; background:transparent; }
-.hud__progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--primary),var(--accent),var(--highlight)); }
-@media (max-width:760px){ .hud__nav{ display:none; } .hud__present-btn span:last-child{ display:none; } }
+<!-- ============ 02 · CERITA DIMULAI ============ -->
+<section class="story-clock" id="story" data-slide data-slide-name="The Story Begins">
+  <p class="eyebrow eyebrow--light">02 · THE STORY BEGINS</p>
+  <div class="clock-row">
+    <div class="flip-clock">
+      <span class="flip-clock__time">23.47</span>
+      <span class="flip-clock__zone">WIB — Sekarang</span>
+    </div>
+    <div class="clock-row__arrow">→</div>
+    <div class="flip-clock flip-clock--target">
+      <span class="flip-clock__time">08.00</span>
+      <span class="flip-clock__zone">WIB — Besok Pagi</span>
+    </div>
+  </div>
+  <p class="story-clock__text">Laptop terbuka. Slide belum siap. Bingung mulai dari mana.</p>
+  <p class="story-clock__text">Besok pagi Anda harus mempresentasikan tugas, proposal, atau laporan penting.</p>
+  <p class="story-clock__punch">Namun&nbsp;&mdash;&nbsp;presentasi belum dibuat.</p>
+</section>
 
-/* =========================================================
-   HERO
-========================================================= */
-.hero{
-  position:relative; max-width:none; min-height:100vh;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:120px 24px 80px;
-  overflow:hidden;
-}
-.hero__grid{
-  position:absolute; inset:0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%);
-  opacity:.6;
-}
-.hero__grid::after{
-  content:"";
-  position:absolute; inset:0;
-  background:radial-gradient(circle at 50% 20%, rgba(139,92,246,.25), transparent 55%);
-}
-.hero__content{ position:relative; max-width:680px; }
-.hero__title{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(36px,6vw,64px); line-height:1.08; margin:6px 0 20px;
-}
-.glow{
-  background:linear-gradient(90deg, var(--primary), var(--accent), var(--highlight));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  filter:drop-shadow(0 0 24px rgba(139,92,246,.35));
-}
-.hero__tagline{ color:var(--text-dim); font-size:17px; margin-bottom:38px; }
-.hero__prompt{ font-size:14px; color:var(--text-dim); margin-bottom:8px; }
-.hero__challenge{
-  font-family:var(--font-display); font-size:clamp(18px,2.4vw,24px);
-  max-width:560px; margin:0 auto 40px; line-height:1.4;
-}
-.hero__challenge strong{ color:var(--primary); }
-.hero__targets{
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:22px 26px; text-align:left; max-width:360px; margin:0 auto 40px;
-}
-.hero__targets-label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--highlight); display:block; margin-bottom:12px; }
-.hero__targets li{ display:flex; gap:10px; padding:5px 0; font-size:14.5px; color:var(--text-dim); }
-.hero__targets .check{ color:var(--primary); font-weight:700; }
+<!-- ============ 03 · MASALAH ============ -->
+<section class="reasons" id="problem" data-slide data-slide-name="The Problem">
+  <p class="eyebrow">03 · THE PROBLEM</p>
+  <h2 class="section-title reveal">Biasanya Butuh <span class="text-highlight">Berjam-jam</span><br>untuk Membuat Presentasi...</h2>
+  <div class="reasons__grid">
+    <div class="reason-card reveal">
+      <span class="reason-card__icon">🔍</span>
+      <span class="reason-card__label">Cari materi</span>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-card__icon">✍️</span>
+      <span class="reason-card__label">Menulis</span>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-card__icon">🎨</span>
+      <span class="reason-card__label">Desain</span>
+    </div>
+    <div class="reason-card reveal">
+      <span class="reason-card__icon">🔄</span>
+      <span class="reason-card__label">Revisi berkali-kali</span>
+    </div>
+  </div>
+  <blockquote class="pull-quote reveal">
+    <strong>Bukan karena Anda tidak mampu.</strong>
+    <span>Tetapi karena prosesnya belum efisien — dan waktu terus berjalan.</span>
+  </blockquote>
+</section>
 
-.scroll-cue{
-  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-  display:flex; flex-direction:column; align-items:center; gap:8px;
-  letter-spacing:.08em;
-}
-.scroll-cue span{
-  width:1px; height:26px; background:linear-gradient(var(--highlight), transparent);
-  animation:scrollCue 1.6s infinite;
-}
-@keyframes scrollCue{ 0%{ opacity:0; transform:scaleY(0); transform-origin:top;} 40%{opacity:1; transform:scaleY(1);} 100%{opacity:0; transform:scaleY(1); transform-origin:bottom;} }
+<!-- ============ 04 · AI HADIR / SOLUSI ============ -->
+<section class="ai-intro" id="solution" data-slide data-slide-name="The Solution">
+  <p class="eyebrow eyebrow--light">04 · THE SOLUTION</p>
+  <h2 class="ai-intro__title reveal">Bagaimana Kalau Cukup<br><span class="text-primary">60 Menit</span> Saja?</h2>
 
-/* =========================================================
-   STORY CLOCK (02)
-========================================================= */
-.story-clock{ text-align:center; }
-.clock-row{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; margin-bottom:36px; }
-.clock-row__arrow{ font-size:22px; color:var(--text-dim); }
-.flip-clock{ display:flex; flex-direction:column; align-items:center; gap:10px; }
-.flip-clock__time{
-  font-family:var(--font-mono); font-weight:700; font-size:clamp(40px,7vw,64px);
-  background:var(--surface); border:1px solid var(--border); border-radius:14px;
-  padding:14px 26px; color:var(--highlight); letter-spacing:.02em;
-}
-.flip-clock--target .flip-clock__time{ color:var(--primary); }
-.flip-clock__zone{ font-size:12px; color:var(--text-dim); font-family:var(--font-mono); }
-.story-clock__text{ font-size:16px; color:var(--text-dim); margin-bottom:8px; }
-.story-clock__punch{ font-family:var(--font-display); font-size:22px; color:var(--text); margin-top:18px; }
+  <div class="ai-card reveal">
+    <div class="ai-card__avatar">
+      <div class="ai-orb"></div>
+    </div>
+    <div class="ai-card__bubble">
+      <p class="typewriter" id="aiTyped" data-full="Halo. Saya AI. Saya tidak akan menggantikan kreativitas Anda — saya akan membantu Anda bekerja lebih cepat, lebih fokus, dan lebih percaya diri."></p>
+    </div>
+  </div>
 
-/* =========================================================
-   REASONS (03)
-========================================================= */
-.reasons__grid{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:44px 0 0;
-}
-.reason-card{
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:28px 16px; text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center;
-  transition:border-color .25s ease, transform .25s ease;
-}
-.reason-card:hover{ border-color:var(--highlight); transform:translateY(-3px); }
-.reason-card__icon{ font-size:30px; }
-.reason-card__label{ font-size:13.5px; color:var(--text-dim); }
-@media (max-width:640px){ .reasons__grid{ grid-template-columns:repeat(2,1fr); } }
+  <div class="benefit-chips reveal">
+    <span class="benefit-chip">⚡ Lebih Cepat</span>
+    <span class="benefit-chip">🎯 Lebih Fokus</span>
+    <span class="benefit-chip">🏆 Hasil Sebelum Deadline</span>
+  </div>
 
-/* =========================================================
-   AI INTRO (04)
-========================================================= */
-.ai-intro{ text-align:center; }
-.ai-intro__title{ font-family:var(--font-display); font-size:clamp(26px,4vw,38px); margin-bottom:48px; }
-.ai-card{
-  display:flex; align-items:center; gap:22px; text-align:left;
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:26px; max-width:560px; margin:0 auto;
-}
-.ai-card__avatar{ flex-shrink:0; }
-.ai-orb{
-  width:56px; height:56px; border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, var(--primary), var(--accent-dim) 70%);
-  box-shadow:0 0 30px rgba(79,140,255,.5);
-  animation:orbPulse 2.4s ease-in-out infinite;
-}
-@keyframes orbPulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.08);} }
-.ai-card__bubble{ font-size:15px; color:var(--text-dim); min-height:70px; }
-.typewriter{ border-right:2px solid var(--primary); padding-right:2px; }
-.benefit-chips{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:28px; }
-.benefit-chip{
-  font-family:var(--font-mono); font-size:12.5px; background:var(--surface); border:1px solid var(--border);
-  padding:10px 16px; border-radius:100px; color:var(--text-dim);
-}
-.activated{
-  margin-top:32px; font-family:var(--font-mono); letter-spacing:.2em; font-size:13px;
-  color:var(--highlight); border:1px solid var(--highlight); display:inline-block; padding:10px 22px; border-radius:100px;
-}
+  <div class="activated reveal">MISSION ACTIVATED</div>
+</section>
 
-/* =========================================================
-   MISI HARI INI — 10 LANGKAH (05)
-========================================================= */
-.misi10{ text-align:center; }
-.misi10__sub{ color:var(--text-dim); margin-bottom:40px; }
-.misi10__list{
-  display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:32px; text-align:left;
-}
-.misi10__list li{
-  font-family:var(--font-display); font-size:14.5px;
-  background:var(--surface); border:1px solid var(--border); border-radius:12px;
-  padding:14px 18px; display:flex; align-items:center; gap:12px;
-}
-.misi10__num{
-  font-family:var(--font-mono); font-size:12px; color:var(--bg); background:var(--highlight);
-  width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; font-weight:700;
-}
-.misi10__punch{ color:var(--text-dim); font-size:15px; }
-@media (max-width:640px){ .misi10__list{ grid-template-columns:1fr; } }
+<!-- ============ 05 · MISI HARI INI — 10 LANGKAH ============ -->
+<section class="misi10" id="misi-hari-ini" data-slide data-slide-name="Misi Hari Ini">
+  <p class="eyebrow">05 · MISI KITA HARI INI</p>
+  <h2 class="section-title reveal">10 Langkah Misi 60 Menitmu</h2>
+  <p class="misi10__sub reveal">Setiap langkah kecil, dikerjakan berurutan, hasil akhirnya besar.</p>
+  <ol class="misi10__list">
+    <li class="reveal"><span class="misi10__num">1</span> Tentukan Tujuan</li>
+    <li class="reveal"><span class="misi10__num">2</span> Buat Outline dengan AI</li>
+    <li class="reveal"><span class="misi10__num">3</span> Kembangkan Isi Slide</li>
+    <li class="reveal"><span class="misi10__num">4</span> Desain Slide dengan AI</li>
+    <li class="reveal"><span class="misi10__num">5</span> Tambahkan Visual &amp; Diagram</li>
+    <li class="reveal"><span class="misi10__num">6</span> Finalisasi &amp; Rapikan</li>
+    <li class="reveal"><span class="misi10__num">7</span> Siapkan Naskah Presentasi</li>
+    <li class="reveal"><span class="misi10__num">8</span> Review &amp; Checklist</li>
+    <li class="reveal"><span class="misi10__num">9</span> Export ke PowerPoint</li>
+    <li class="reveal"><span class="misi10__num">10</span> Presentasi dengan Percaya Diri</li>
+  </ol>
+  <p class="misi10__punch reveal">10 langkah sederhana. Satu presentasi profesional.</p>
+</section>
 
-/* =========================================================
-   QUESTS / LEVELS
-========================================================= */
-.quests{ max-width:var(--container); }
-.quest{
-  border-top:1px solid var(--border);
-  padding:64px 0;
-  display:grid; grid-template-columns:120px 1fr; gap:24px;
-  position:relative;
-}
-.quest__tag{
-  font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--highlight);
-  display:block; margin-bottom:14px;
-}
-.quest--alt .quest__tag{ color:var(--primary); }
-.quest__title{ font-family:var(--font-display); font-size:clamp(22px,3vw,30px); margin-bottom:16px; }
-.quest__intro{ color:var(--text-dim); font-size:15px; margin-bottom:10px; }
-.quest__points{ display:flex; flex-direction:column; gap:8px; margin:14px 0; }
-.quest__points li{ font-size:15px; }
-.quest__points--grid{ display:grid; grid-template-columns:repeat(2,auto); gap:10px 24px; }
-.quest__tip, .quest__output, .quest__punch{
-  margin-top:18px; font-size:14px; padding:14px 18px; border-radius:12px;
-  background:var(--surface); border:1px solid var(--border); color:var(--text-dim);
-}
-.quest__punch{ color:var(--text); font-family:var(--font-display); font-size:16px; }
-.quest__prompt{
-  font-family:var(--font-mono); font-size:13.5px; color:var(--primary);
-  background:var(--bg-alt); border:1px dashed var(--primary-dim); border-radius:12px;
-  padding:14px 16px; margin:10px 0 16px;
-}
-.quest__chain{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:18px; font-family:var(--font-mono); font-size:13px; }
-.quest__chain span{ background:var(--surface); border:1px solid var(--border); padding:8px 14px; border-radius:100px; }
-.chain__arrow{ background:none !important; border:none !important; color:var(--text-dim); padding:0 !important; }
-.quest__next{ margin-top:24px; }
+<!-- ============ QUESTS / LEVELS ============ -->
+<section class="quests" id="quests">
 
-.quest__meta{ grid-column:1 / -1; }
-@media (min-width:760px){
-  .quest__meta{ grid-column:2 / 3; }
-  .quest::after{
-    font-family:var(--font-mono); font-size:52px; font-weight:700;
-    color:var(--surface-2); align-self:start; grid-column:1/2; grid-row:1/2;
-  }
-  #quest-1::after{ content:"01"; }
-  #quest-2::after{ content:"02"; }
-  #quest-3::after{ content:"03"; }
-  #quest-4::after{ content:"04"; }
-  #quest-5::after{ content:"05"; }
-  #quest-6to10::after{ content:"06–10"; font-size:32px; }
-}
-.quest--wide .quest__meta--wide{ grid-column:1 / -1; }
+  <!-- LEVEL 1 -->
+  <article class="quest" id="quest-1" data-slide data-slide-name="Level 1">
+    <div class="quest__meta">
+      <span class="quest__tag">LEVEL 1 · LANGKAH 1</span>
+      <h3 class="quest__title reveal">Tentukan Tujuan Presentasi</h3>
+      <p class="quest__intro reveal">Sebelum menggunakan AI, jawab dulu empat hal ini.</p>
+      <ul class="quest__points reveal">
+        <li>✅ Tentukan topik</li>
+        <li>✅ Kenali audiens</li>
+        <li>✅ Tentukan tujuan</li>
+        <li>✅ Tentukan pesan utama</li>
+      </ul>
+      <p class="quest__tip reveal">⭐ Tujuan yang jelas = arah yang tepat. AI akan menghasilkan jawaban jauh lebih baik jika tujuan Anda jelas sejak awal.</p>
+      <button class="btn btn--ghost quest__next reveal" data-goto="quest-2">Next Mission →</button>
+    </div>
+  </article>
 
-/* Chat demo (Level 2) */
-.chat-demo{
-  background:var(--bg-alt); border:1px solid var(--border); border-radius:12px;
-  padding:16px 18px; margin:16px 0; min-height:150px;
-  font-family:var(--font-mono); font-size:13px;
-}
-.chat-demo__lines div{ padding:4px 0; color:var(--text-dim); opacity:0; animation:chatLine .35s forwards; }
-.chat-demo__lines div.you{ color:var(--highlight); }
-.chat-demo__lines div.ai{ color:var(--primary); }
-@keyframes chatLine{ from{ opacity:0; transform:translateY(4px);} to{ opacity:1; transform:translateY(0);} }
+  <!-- LEVEL 2 -->
+  <article class="quest quest--alt" id="quest-2" data-slide data-slide-name="Level 2">
+    <div class="quest__meta">
+      <span class="quest__tag">LEVEL 2 · LANGKAH 2</span>
+      <h3 class="quest__title reveal">Buat Outline dengan AI</h3>
+      <p class="quest__intro reveal">Masukkan prompt sederhana ke AI:</p>
+      <div class="quest__prompt reveal">"Buat outline presentasi 12 slide tentang AI untuk mahasiswa."</div>
 
-/* Level 6-10 finalize grid */
-.finalize-grid{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:18px 0 26px;
-}
-.finalize-item{
-  display:flex; align-items:center; gap:10px; font-size:14px;
-  background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 16px;
-}
-.finalize-item__num{
-  font-family:var(--font-mono); font-size:11px; color:var(--bg); background:var(--primary);
-  width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; font-weight:700;
-}
+      <div class="chat-demo reveal" id="chatDemo" data-lines='["You: Buat outline presentasi 12 slide tentang AI untuk mahasiswa.","AI: Generating...","AI: Berikut outline presentasinya:","1. Pembukaan","2. Apa itu AI?","3. Sejarah singkat AI","4. Jenis-jenis AI","5. Cara kerja AI","...","12. Penutup"]'>
+        <div class="chat-demo__lines" id="chatDemoLines"></div>
+      </div>
 
-/* =========================================================
-   FINALE / MISSION COMPLETE
-========================================================= */
-.finale{ text-align:center; }
-.finale__title{ font-family:var(--font-display); font-size:clamp(26px,4vw,38px); margin-bottom:22px; }
-.finale__text{ color:var(--text-dim); font-size:15px; }
-.finale__flow{ display:flex; align-items:center; justify-content:center; gap:14px; margin:18px 0; flex-wrap:wrap; }
-.finale__pill{
-  font-family:var(--font-display); font-size:15px;
-  background:var(--surface); border:1px solid var(--border); border-radius:100px; padding:12px 22px;
-}
-.finale__pill--accent{ border-color:var(--highlight); color:var(--highlight); }
-.finale__flow-arrow{ color:var(--text-dim); }
+      <p class="quest__output reveal">Output: Outline siap digunakan — lengkap dengan pembukaan dan penutup.</p>
+      <button class="btn btn--ghost quest__next reveal" data-goto="quest-3">Next Mission →</button>
+    </div>
+  </article>
 
-/* =========================================================
-   TOOLKIT
-========================================================= */
-.toolkit__table{
-  margin-top:36px; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
-}
-.toolkit__row{
-  display:grid; grid-template-columns:1fr 1fr; padding:16px 22px; font-size:14.5px;
-  border-top:1px solid var(--border);
-}
-.toolkit__row:first-child{ border-top:none; }
-.toolkit__row--head{
-  font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; color:var(--highlight);
-  background:var(--surface);
-}
-.toolkit__row span:last-child{ color:var(--text-dim); }
-.toolkit__row--head span{ color:var(--highlight); }
+  <!-- LEVEL 3 -->
+  <article class="quest" id="quest-3" data-slide data-slide-name="Level 3">
+    <div class="quest__meta">
+      <span class="quest__tag">LEVEL 3 · LANGKAH 3</span>
+      <h3 class="quest__title reveal">Kembangkan Isi Setiap Slide</h3>
+      <p class="quest__intro reveal">Minta AI mengembangkan isi dari setiap poin outline.</p>
+      <ul class="quest__points reveal">
+        <li>💬 Minta AI mengembangkan isi tiap slide</li>
+        <li>🗣 Gunakan bahasa yang mudah dipahami</li>
+        <li>📝 Batasi 3–5 poin penting per slide</li>
+        <li>📊 Tambahkan contoh, data, atau studi kasus</li>
+      </ul>
+      <div class="quest__chain reveal">
+        <span>Idea</span><span class="chain__arrow">→</span>
+        <span>Outline</span><span class="chain__arrow">→</span>
+        <span>Content</span><span class="chain__arrow">→</span>
+        <span>Presentation</span>
+      </div>
+      <p class="quest__output reveal">Output: Presentasi siap didesain.</p>
+      <button class="btn btn--ghost quest__next reveal" data-goto="quest-4">Next Mission →</button>
+    </div>
+  </article>
 
-/* =========================================================
-   DATA / SPREADSHEET EMBED
-========================================================= */
-.sheet{ text-align:center; }
-.sheet__sub{ color:var(--text-dim); margin-bottom:32px; }
-.sheet__frame{
-  border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
-  background:var(--surface); box-shadow:0 20px 50px rgba(0,0,0,.35);
-}
-.sheet__bar{
-  display:flex; align-items:center; gap:8px; padding:12px 16px;
-  border-bottom:1px solid var(--border); background:var(--bg-alt);
-}
-.sheet__dot{
-  width:9px; height:9px; border-radius:50%; background:var(--border);
-}
-.sheet__dot:nth-child(1){ background:#FF5F57; }
-.sheet__dot:nth-child(2){ background:#FEBC2E; }
-.sheet__dot:nth-child(3){ background:#28C840; }
-.sheet__bar-label{
-  margin-left:8px; font-family:var(--font-mono); font-size:11px;
-  letter-spacing:.08em; color:var(--text-dim);
-}
-.sheet__embed{
-  display:block; width:100%; height:480px; border:0; background:var(--text);
-}
-@media (max-width:640px){ .sheet__embed{ height:360px; } }
+  <!-- LEVEL 4 -->
+  <article class="quest quest--alt" id="quest-4" data-slide data-slide-name="Level 4">
+    <div class="quest__meta">
+      <span class="quest__tag">LEVEL 4 · LANGKAH 4</span>
+      <h3 class="quest__title reveal">Desain Slide dengan AI</h3>
+      <div class="quest__chain reveal">
+        <span>ChatGPT</span><span class="chain__arrow">→</span>
+        <span>Gamma</span><span class="chain__arrow">→</span>
+        <span>Canva AI</span><span class="chain__arrow">→</span>
+        <span>PowerPoint</span>
+      </div>
+      <ul class="quest__points reveal">
+        <li>🎨 Pilih tema yang sesuai</li>
+        <li>🎛 Atur warna &amp; font</li>
+        <li>🖼 Ganti gambar / ikon</li>
+        <li>📐 Rapikan layout</li>
+        <li>✨ Hasilkan slide profesional</li>
+      </ul>
+      <p class="quest__output reveal">Target: Presentasi terlihat profesional tanpa harus menjadi desainer.</p>
+      <button class="btn btn--ghost quest__next reveal" data-goto="quest-5">Next Mission →</button>
+    </div>
+  </article>
 
-/* =========================================================
-   CHECKLIST
-========================================================= */
-.checklist{ text-align:center; }
-.checklist__sub{ color:var(--text-dim); margin-bottom:32px; }
-.checklist__box{
-  display:grid; grid-template-columns:1fr 1fr; gap:12px; text-align:left; margin-bottom:28px;
-}
-.checklist__item{
-  display:flex; align-items:center; gap:12px; padding:14px 16px;
-  background:var(--surface); border:1px solid var(--border); border-radius:12px; cursor:pointer;
-  font-size:14.5px; transition:border-color .2s ease;
-}
-.checklist__item:has(input:checked){ border-color:var(--highlight); }
-.checklist__item:has(input:checked) span{ color:var(--text-dim); text-decoration:line-through; }
-.checklist__item input{ accent-color:var(--highlight); width:16px; height:16px; }
-.checklist__progress{ display:flex; align-items:center; gap:14px; }
-.checklist__progress-track{ flex:1; height:6px; background:var(--surface-2); border-radius:6px; overflow:hidden; }
-.checklist__progress-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--primary),var(--highlight)); transition:width .3s ease; }
-#checklistCount{ font-family:var(--font-mono); font-size:12px; color:var(--text-dim); white-space:nowrap; }
-@media (max-width:640px){ .checklist__box{ grid-template-columns:1fr; } }
+  <!-- LEVEL 5 -->
+  <article class="quest" id="quest-5" data-slide data-slide-name="Level 5">
+    <div class="quest__meta">
+      <span class="quest__tag">LEVEL 5 · LANGKAH 5</span>
+      <h3 class="quest__title reveal">Tambahkan Visual &amp; Diagram</h3>
+      <p class="quest__intro reveal">Visual yang tepat membuat pesan lebih cepat dipahami.</p>
+      <ul class="quest__points quest__points--grid reveal">
+        <li>📈 Diagram otomatis dengan AI</li>
+        <li>🧩 Infografis menarik</li>
+        <li>🎯 Ikon &amp; ilustrasi AI</li>
+        <li>📊 Grafik &amp; data visual</li>
+      </ul>
+      <p class="quest__output reveal">Output: Slide yang tadinya penuh teks kini mudah dicerna dalam sekali pandang.</p>
+      <button class="btn btn--ghost quest__next reveal" data-goto="quest-6to10">Next Mission →</button>
+    </div>
+  </article>
 
-/* =========================================================
-   BONUS
-========================================================= */
-.bonus{ text-align:center; }
-.bonus__grid{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:44px 0 40px;
-}
-.bonus-card{
-  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:26px 18px; display:flex; flex-direction:column; gap:10px; text-align:left;
-  transition:border-color .25s ease, transform .25s ease;
-}
-.bonus-card:hover{ border-color:var(--accent); transform:translateY(-3px); }
-.bonus-card__icon{ font-size:26px; }
-.bonus-card__title{ font-family:var(--font-display); font-size:15px; }
-.bonus-card__desc{ font-size:13px; color:var(--text-dim); line-height:1.5; }
-.bonus__cta{ display:flex; flex-direction:column; align-items:center; gap:14px; }
-.bonus__cta-note{ font-family:var(--font-mono); font-size:12.5px; color:var(--highlight); }
-@media (max-width:760px){ .bonus__grid{ grid-template-columns:1fr 1fr; } }
-@media (max-width:480px){ .bonus__grid{ grid-template-columns:1fr; } }
+  <!-- LEVEL 6-10 -->
+  <article class="quest quest--alt quest--wide" id="quest-6to10" data-slide data-slide-name="Level 6-10">
+    <div class="quest__meta quest__meta--wide">
+      <span class="quest__tag">LEVEL 6–10 · LANGKAH 6–10</span>
+      <h3 class="quest__title reveal">Finalisasi Hingga Siap Tampil</h3>
+      <p class="quest__intro reveal">Lima langkah terakhir sebelum Anda benar-benar naik panggung.</p>
 
-/* =========================================================
-   ACHIEVEMENT
-========================================================= */
-.achievement{ text-align:center; padding-top:60px; padding-bottom:140px; }
-.achievement__badge{
-  max-width:420px; margin:0 auto; padding:44px 30px;
-  background:radial-gradient(circle at 50% 0%, rgba(139,92,246,.18), transparent 60%), var(--surface);
-  border:1px solid var(--highlight); border-radius:24px;
-}
-.achievement__trophy{ font-size:52px; margin-bottom:14px; }
-.achievement__unlocked{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; color:var(--highlight); display:block; margin-bottom:10px; }
-.achievement__title{ font-family:var(--font-display); font-size:28px; margin-bottom:14px; }
-.achievement__desc{ color:var(--text-dim); font-size:14.5px; }
+      <div class="finalize-grid reveal">
+        <div class="finalize-item"><span class="finalize-item__num">6</span> Finalisasi &amp; rapikan</div>
+        <div class="finalize-item"><span class="finalize-item__num">7</span> Siapkan naskah presentasi</div>
+        <div class="finalize-item"><span class="finalize-item__num">8</span> Review &amp; checklist</div>
+        <div class="finalize-item"><span class="finalize-item__num">9</span> Export ke PowerPoint</div>
+        <div class="finalize-item"><span class="finalize-item__num">10</span> Presentasi dengan percaya diri</div>
+      </div>
 
-/* =========================================================
-   FOOTER
-========================================================= */
-.footer{ text-align:center; padding:50px 24px 80px; color:var(--text-dim); font-size:13px; }
-.footer p:first-child{ font-family:var(--font-mono); letter-spacing:.08em; color:var(--text); margin-bottom:6px; }
+      <p class="quest__intro reveal">Sebelum presentasi dimulai, periksa kembali:</p>
+      <ul class="quest__points quest__points--grid reveal">
+        <li>☑ Judul jelas</li>
+        <li>☑ Font mudah dibaca</li>
+        <li>☑ Warna konsisten</li>
+        <li>☑ Visual relevan</li>
+        <li>☑ Alur logis</li>
+        <li>☑ Latihan presentasi</li>
+      </ul>
+      <p class="quest__punch reveal">Presentasi yang baik bukan yang paling ramai, tetapi yang paling mudah dipahami.</p>
+    </div>
+  </article>
 
-/* =========================================================
-   MASCOT WIDGET
-========================================================= */
-.mascot{ position:fixed; right:22px; bottom:22px; z-index:70; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
-.mascot__btn{
-  width:56px; height:56px; border-radius:50%; border:1px solid var(--border); cursor:pointer;
-  background:radial-gradient(circle at 35% 30%, var(--primary), var(--accent-dim) 75%);
-  box-shadow:0 8px 24px rgba(79,140,255,.35);
-  display:flex; align-items:center; justify-content:center; gap:6px;
-  animation:mascotFloat 3s ease-in-out infinite;
-}
-.mascot__eye{ width:6px; height:6px; border-radius:50%; background:#fff; animation:mascotBlink 4s infinite; }
-@keyframes mascotFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
-@keyframes mascotBlink{ 0%,92%,100%{ transform:scaleY(1);} 96%{ transform:scaleY(0.1);} }
-.mascot__bubble{
-  max-width:220px; background:var(--surface); border:1px solid var(--border); border-radius:14px;
-  padding:12px 14px; font-size:13px; color:var(--text-dim); display:none; box-shadow:0 10px 26px rgba(0,0,0,.35);
-}
-.mascot__bubble.is-visible{ display:block; }
+</section>
 
-/* =========================================================
-   PRESENTATION MODE
-========================================================= */
-.pmode-exit, .pmode-dots, .pmode-counter, .pmode-hint{ display:none; }
+<!-- ============ 12 · MISSION COMPLETE (BABAK III) ============ -->
+<section class="finale" id="mission-complete" data-slide data-slide-name="Mission Complete">
+  <p class="eyebrow eyebrow--light">BABAK III · MISSION COMPLETE</p>
+  <h2 class="finale__title reveal">Selamat! Misi Berhasil Diselesaikan</h2>
+  <p class="finale__text reveal">Hari ini Anda telah belajar bagaimana mengubah</p>
+  <div class="finale__flow reveal">
+    <span class="finale__pill">💡 Ide</span>
+    <span class="finale__flow-arrow">→</span>
+    <span class="finale__pill finale__pill--accent">🎤 Presentasi Profesional</span>
+  </div>
+  <p class="finale__text reveal">hanya dalam <strong>⏱ 60 Menit</strong>.</p>
 
-body.presenting .hud,
-body.presenting .hud__progress,
-body.presenting .footer,
-body.presenting .mascot{ display:none; }
+  <blockquote class="pull-quote pull-quote--light reveal">
+    <strong>AI tidak menggantikan kemampuan berpikir Anda.</strong>
+    <span>AI membantu Anda bekerja lebih cepat, lebih cerdas, dan lebih kreatif.</span>
+  </blockquote>
+</section>
 
-body.presenting{ height:100%; }
-html.presenting{ height:100%; }
-html.presenting body{
-  height:100%; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth;
-}
-body.presenting [data-slide]{
-  min-height:100vh; max-width:none; width:100%;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  scroll-snap-align:start; scroll-snap-stop:always;
-  padding:100px 24px;
-}
-body.presenting .quest{ display:grid; }
+<!-- ============ TOOLKIT ============ -->
+<section class="toolkit" id="toolkit" data-slide data-slide-name="Toolkit">
+  <p class="eyebrow">TOOLKIT</p>
+  <h2 class="section-title reveal">Toolkit AI yang Digunakan</h2>
+  <div class="toolkit__table reveal">
+    <div class="toolkit__row toolkit__row--head">
+      <span>Tahapan</span><span>Tools</span>
+    </div>
+    <div class="toolkit__row"><span>Brainstorming</span><span>ChatGPT</span></div>
+    <div class="toolkit__row"><span>Outline</span><span>ChatGPT</span></div>
+    <div class="toolkit__row"><span>Desain</span><span>Gamma</span></div>
+    <div class="toolkit__row"><span>Visual</span><span>Canva AI</span></div>
+    <div class="toolkit__row"><span>Finalisasi</span><span>Microsoft PowerPoint</span></div>
+  </div>
+</section>
 
-.pmode-exit{
-  position:fixed; top:20px; right:20px; z-index:90;
-  background:var(--surface); border:1px solid var(--border); color:var(--text);
-  font-family:var(--font-mono); font-size:12px; padding:10px 16px; border-radius:100px; cursor:pointer;
-}
-.pmode-exit:hover{ border-color:var(--highlight); }
-body.presenting .pmode-exit{ display:block; }
+<!-- ============ DATA / SPREADSHEET EMBED ============ -->
+<section class="sheet" id="data" data-slide data-slide-name="Data">
+  <p class="eyebrow">DATA</p>
+  <h2 class="section-title reveal">Lembar Data Mission 60</h2>
+  <p class="sheet__sub reveal">Rekap data langsung dari spreadsheet — otomatis terupdate.</p>
+  <div class="sheet__frame reveal">
+    <div class="sheet__bar">
+      <span class="sheet__dot"></span><span class="sheet__dot"></span><span class="sheet__dot"></span>
+      <span class="sheet__bar-label">Google Sheets — Live View</span>
+    </div>
+    <iframe class="sheet__embed" loading="lazy" title="Mission 60 Data Sheet" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqSAriCl4PSTh6gDuLrzm1daWS20kOoJ015b0xazEpL-Awc7PTO8omToW3dscV83zAbv-pV23drbxz/pubhtml?gid=892550799&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+  </div>
+</section>
 
-.pmode-dots{
-  position:fixed; right:22px; top:50%; transform:translateY(-50%); z-index:90;
-  display:none; flex-direction:column; gap:10px;
-}
-body.presenting .pmode-dots{ display:flex; }
-.pmode-dots__dot{
-  width:8px; height:8px; border-radius:50%; background:var(--surface-2); border:1px solid var(--border);
-  cursor:pointer; transition:background .2s ease, transform .2s ease;
-}
-.pmode-dots__dot.is-active{ background:var(--highlight); transform:scale(1.3); }
+<!-- ============ CHECKLIST (praktik langsung) ============ -->
+<section class="checklist" id="checklist" data-slide data-slide-name="Checklist">
+  <p class="eyebrow">PRAKTIK LANGSUNG</p>
+  <h2 class="section-title reveal">Checklist Mission</h2>
+  <p class="checklist__sub reveal">Centang setiap tahap saat Anda benar-benar menyelesaikannya hari ini.</p>
+  <div class="checklist__box reveal" id="checklistBox">
+    <label class="checklist__item"><input type="checkbox"><span>Menentukan tujuan</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Membuat outline</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Mengembangkan isi</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Mendesain slide</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Menambah visual &amp; diagram</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Finalisasi &amp; naskah</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Review checklist</span></label>
+    <label class="checklist__item"><input type="checkbox"><span>Presentasi selesai</span></label>
+  </div>
+  <div class="checklist__progress reveal">
+    <div class="checklist__progress-track"><div class="checklist__progress-fill" id="checklistFill"></div></div>
+    <span id="checklistCount">0 / 8 selesai</span>
+  </div>
+</section>
 
-.pmode-counter{
-  position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:90;
-  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
-  background:var(--surface); border:1px solid var(--border); padding:8px 16px; border-radius:100px;
-}
-body.presenting .pmode-counter{ display:block; }
+<!-- ============ BONUS ============ -->
+<section class="bonus" id="bonus" data-slide data-slide-name="Bonus">
+  <p class="eyebrow eyebrow--light">🎁 BONUS UNTUKMU</p>
+  <h2 class="section-title reveal">Bekal Tambahan Setelah Misi</h2>
+  <div class="bonus__grid">
+    <div class="bonus-card reveal">
+      <span class="bonus-card__icon">💬</span>
+      <span class="bonus-card__title">30+ Prompt Siap Pakai</span>
+      <span class="bonus-card__desc">Kumpulan prompt AI untuk tiap tahap pembuatan presentasi.</span>
+    </div>
+    <div class="bonus-card reveal">
+      <span class="bonus-card__icon">🗂</span>
+      <span class="bonus-card__title">Template Presentasi Keren</span>
+      <span class="bonus-card__desc">Struktur slide siap isi, tinggal sesuaikan dengan materi Anda.</span>
+    </div>
+    <div class="bonus-card reveal">
+      <span class="bonus-card__icon">✅</span>
+      <span class="bonus-card__title">Checklist Presentasi Profesional</span>
+      <span class="bonus-card__desc">Panduan review sebelum tampil — sama seperti di atas.</span>
+    </div>
+    <div class="bonus-card reveal">
+      <span class="bonus-card__icon">📘</span>
+      <span class="bonus-card__title">E-book AI untuk Presentasi</span>
+      <span class="bonus-card__desc">Ringkasan 10 langkah ini dalam format yang bisa dibaca ulang.</span>
+    </div>
+  </div>
+  <div class="bonus__cta reveal">
+    <a href="#checklist" class="btn btn--primary">🚀 Yuk, Praktekkan Sekarang<span class="btn__arrow">→</span></a>
+    <span class="bonus__cta-note">⭐ You Can Do It!</span>
+  </div>
+</section>
 
-.pmode-hint{
-  position:fixed; bottom:24px; right:24px; z-index:90;
-  font-family:var(--font-mono); font-size:11px; color:var(--text-dim);
-  opacity:0; transition:opacity .3s ease;
-}
-body.presenting .pmode-hint{ display:block; opacity:1; }
-@media (max-width:900px){ .pmode-hint{ display:none !important; } }
+<!-- ============ ACHIEVEMENT ============ -->
+<section class="achievement" id="achievement" data-slide data-slide-name="Achievement">
+  <div class="achievement__badge reveal">
+    <div class="achievement__trophy">🏆</div>
+    <span class="achievement__unlocked">PENCAPAIAN TERBUKA</span>
+    <h2 class="achievement__title">Mission Complete</h2>
+    <p class="achievement__desc">60 Minutes Challenge — Finished. Anda kini bisa membuat presentasi profesional lebih cepat, lebih mudah, dan lebih kreatif.</p>
+  </div>
+</section>
 
-/* =========================================================
-   CONFETTI CANVAS
-========================================================= */
-#confetti{ position:fixed; inset:0; pointer-events:none; z-index:80; }
+</main>
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media (max-width:760px){
-  section{ padding:80px 20px; }
-  .quest{ grid-template-columns:1fr; }
-  .quest::after{ display:none; }
-  .reasons__grid, .bonus__grid{ gap:12px; }
-}
+<footer class="footer">
+  <p>MISSION 60 — Interactive Keynote Experience</p>
+  <p class="footer__muted">Made By KerjaBy. Tekan tombol "Mode Presentasi" untuk tampil layar penuh.</p>
+</footer>
+
+<!-- ============ AI MASCOT WIDGET ============ -->
+<div class="mascot" id="mascot">
+  <div class="mascot__bubble" id="mascotBubble"></div>
+  <button class="mascot__btn" id="mascotBtn" title="Butuh bantuan?">
+    <span class="mascot__eye"></span><span class="mascot__eye"></span>
+  </button>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
